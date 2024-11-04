@@ -1,0 +1,152 @@
+#create required method get_employee_data
+#create a loop incase multiple employees
+def get_employee_data():
+    number = int(input("How many employees?: "))
+    if number <= 0:
+        print("ERROR")
+        print("CAN'T HAVE NEGATIVE EMPLOYEES!")
+        print("MUST HAVE AT LEASR ONE EMPLOYEE!")
+        number = int(input("How many employees?: "))
+    for num in range(number):
+        name = (input("Employee's name: "))
+        hours = float(input("Hour's worked: "))
+        wage = float(input("Hourly Wage: "))
+        total_pay = calculate_payroll(name, hours, wage, number)
+        display_employee_pay(name, number, total_pay)
+        print("-------------------")
+    return name, hours, wage, number
+
+def calculate_payroll(name, hours, wage, number):
+    BASE_HOURS = 40
+    EXTRA_WAGE = wage * 1.5
+    if hours > BASE_HOURS:
+        extra_hours = hours - BASE_HOURS
+        overtime_pay = extra_hours * EXTRA_WAGE
+        total_pay = hours * wage + overtime_pay
+    else:
+        total_pay = hours * wage
+    return total_pay
+
+def display_employee_pay(name, number, total_pay):
+    print(f"{name} earned a total of ${total_pay:,.2f}")
+
+def employee_payroll_system():
+    name, hours, wage, number = get_employee_data()
+    total_pay = calculate_payroll(name, hours, wage, number)
+
+###    
+#EMPLOYEE_PAYROLL_SYSTEM
+###
+###
+
+
+def get_order_data():
+    number = int(input("How many orders?: "))
+    if number <= 0:
+        print("ERROR")
+        print("CAN'T HAVE NEGATIVE ORDERS!")
+        print("MUST HAVE AT LEASR ONE ORDER!")
+        number = int(input("How many orders?: "))
+    for num in range(number):
+        name = (input("Customers's name: "))
+        total = int(input("Order total?: "))
+        discounted = calculate_discount(total)
+        display_order_summary(name, total, discounted)
+        print("-------------------")
+    return name, total
+
+def calculate_discount(total):
+    DISCOUNT = .10
+    if total > 500:
+        discounted = total * DISCOUNT
+    else:
+        discounted = 0
+    return discounted
+
+def display_order_summary(name, total, discounted):
+    print(f"{name} order a total worth ${total:,.2f}")
+    if discounted != 0:
+        print(f"They earned a discount of {discounted:,.2f}")
+
+def customer_orders_processor():
+    name, total = get_order_data()
+    discounted = calculate_discount(total)
+
+###
+#CUSTOMER_ORDERS_PROCESSOR
+###
+###
+
+
+def get_monthly_data():
+    revenue = int(input("What is the monthly revenue?: "))
+    expenses = int(input("What are the monthly expenses?: "))
+    profit, loss, net_income = calculate_profit_or_loss(revenue, expenses)
+    display_profit_summary(profit, loss, net_income)
+    print("-------------------")
+    return revenue, expenses
+
+def calculate_profit_or_loss(revenue, expenses):
+    net_income = 0
+    net_income = revenue - expenses
+    if net_income >= 0:
+        profit = revenue - expenses
+        loss = 0
+    else:
+        loss = revenue - expenses
+        profit = 0
+    return profit, loss, net_income
+
+def display_profit_summary(profit, loss, net_income):
+    if net_income >= 0:
+        print(f"This month had a profit of ${profit:,.2f}")
+    else:
+        print(f"This month had a loss of ${loss:,.2f}")
+        
+
+def monthly_profit_calculator():
+    revenue, expenses = get_monthly_data()
+    profit, loss, net_income = calculate_profit_or_loss(revenue, expenses)
+    
+#monthly_profit_calculator()
+
+
+def display_menu():
+    print(f"Welcome, Please select a choice: ")
+    print("1. Payroll\n2. Customer Orders Processor\n3. Monthly Profit Calculator\n4. Exit")
+    print()
+    choice = int(input("Choice Number: "))
+    while choice <= 0 or choice > 4:
+        print("ERROR")
+        print("PLEASE SELECT A VALID NUMBER!!")
+        print("-------------------")
+        print(f"Welcome, Please select a choice: ")
+        print("1. Payroll\n2. Customer Orders Processor\n3. Monthly Profit Calculator\n4. Exit")
+        print()
+        choice = int(input("Choice Number: "))
+    return choice
+        
+#display_menu()
+
+def process_menu_choice(choice):
+    if choice == 1:
+        employee_payroll_system()
+    elif choice == 2:
+        customer_orders_processor()
+    elif choice == 3:
+        monthly_profit_calculator()    
+    else:
+        choice == 4
+    if choice == 4:
+        return True
+
+def main():
+    while True:
+        try:
+            choice = display_menu()
+            if process_menu_choice(choice) == True:
+                break
+        except ValueError:
+            print("Invalid input. Please enter valid number")
+
+main()
